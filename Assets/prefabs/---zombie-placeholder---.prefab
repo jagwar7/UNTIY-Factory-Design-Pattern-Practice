@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7083845750257116042}
   - component: {fileID: 3705432729957172180}
   - component: {fileID: 2156895980467668339}
-  - component: {fileID: 4375441188039835252}
+  - component: {fileID: -8344949425726689033}
   m_Layer: 0
   m_Name: ---zombie-placeholder---
   m_TagString: Untagged
@@ -109,7 +109,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4375441188039835252
+--- !u!114 &-8344949425726689033
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,6 +118,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 941847374100466930}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27b7df6bc1adc1241832d889a1d5943c, type: 3}
+  m_Script: {fileID: 11500000, guid: c19b5cd5cc4678d48be0d2d5ff11cd53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterData: {fileID: 11400000, guid: 22a286d3eab7f4f42ae3b8fc455335a3, type: 2}
