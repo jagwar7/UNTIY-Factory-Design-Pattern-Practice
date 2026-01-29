@@ -455,7 +455,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a85de96900825154fa35c90fc676685a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterFactory: {fileID: 1840148266}
+  characterFactoryList:
+  - {fileID: 1840148266}
+  - {fileID: 965964672}
 --- !u!4 &883826228
 Transform:
   m_ObjectHideFlags: 0

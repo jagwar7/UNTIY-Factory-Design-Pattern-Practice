@@ -5,7 +5,7 @@ public class GhostFactory : BaseCharacterFactory
 {
     [SerializeField] private CharacterData ghostData;
 
-    // CREATING GHOST FROM GHOST SCRIPTABLE OBJECT
+    // CREATING GHOST FROM SCRIPTABLE OBJECT
     public override ICharacter CreateCharacter()
     {
         GameObject ghostObj = Instantiate(ghostData.characterPrefab);

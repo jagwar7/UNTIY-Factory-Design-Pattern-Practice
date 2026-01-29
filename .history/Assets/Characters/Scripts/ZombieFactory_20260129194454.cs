@@ -3,11 +3,12 @@ using UnityEngine;
 public class ZombieFactory : BaseCharacterFactory
 {
     [SerializeField] private CharacterData zombieData;
+    [SerializeField] private GameObject zombiePrefab;
 
-    // CREATING CHARACTER FROM ZOMBIE SCRIPTABLE OBJECT
     public override ICharacter CreateCharacter()
     {
-        GameObject zombieObj = Instantiate(zombieData.characterPrefab);
-        return zombieObj.GetComponent<ICharacter>();
+        Debug.Log("Zombie Entered in the Game World");
+
+        return Instantiate(zombiePrefab).GetComponent<ICharacter>();
     }
 }
