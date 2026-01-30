@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-namespace Project.Core
+namespace Game.Core
 {
     public class UniversalCharacter : MonoBehaviour, ICharacter
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Project.Core
+namespace Game.Core
 {
     public abstract class BaseCharacterFactory : MonoBehaviour
     {
