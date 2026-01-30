@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 
 
-namespace Project.Core
+namespace Game.Core
 {
     public class LevelManager : MonoBehaviour
     {

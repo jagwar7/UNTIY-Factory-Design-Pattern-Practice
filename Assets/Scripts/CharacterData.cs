@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-namespace Project.Core
+namespace Game.Core
 {
     [CreateAssetMenu(fileName = "NewCharacterData", menuName = "Factory/Character Data")]
     public class CharacterData : ScriptableObject

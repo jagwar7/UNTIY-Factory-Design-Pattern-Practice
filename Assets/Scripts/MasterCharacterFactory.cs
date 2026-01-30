@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 
 
-namespace Project.Core
+namespace Game.Core
 {
     public class MasterCharacterFactory : BaseCharacterFactory
     {

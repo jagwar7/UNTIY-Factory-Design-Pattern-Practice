@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Ghost X
   characterPrefab: {fileID: 3176229293344782252, guid: a032c4b3a5b79324ea4b386e5a6c52ed, type: 3}
-  health: 50
+  health: 100
   speed: 15
   actionText: 
