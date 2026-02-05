@@ -5,18 +5,42 @@ namespace Game.Core
 {
     public class UniversalCharacter : MonoBehaviour, ICharacter
     {
+        [Header("Assign character data scriptable object")]
         public CharacterData characterData; 
+        private IWeapon currentWeapon;
 
-        public void PerformAction()
+
+        public void Initialize(CharacterData characterData)
         {
-            if (characterData != null)
+            this.characterData = characterData;
+            SetupWeapon();
+
+            Debug.Log($"==== UNIVERSAL CHARACTER === : {this.characterData}");
+        }
+
+        
+        public void SetupWeapon()
+        {
+            if(characterData.defaultWeapon != null)
             {
-                Debug.Log($"character name : {characterData.name} --- Character Action: {characterData.actionText}");
-            }
-            else
-            {
-                Debug.LogError($"No CharacterData assigned to {gameObject.name}!");
+                GameObject weaponObject = Instantiate(characterData.defaultWeapon.weaponPrefab, transform);
+                currentWeapon = weaponObject.GetComponent<IWeapon>();
             }
         }
+
+
+        public bool Fire()
+        {
+            if(currentWeapon == null) return false;
+            return currentWeapon.Fire();
+        }
+
+        public bool Reload()
+        {
+            if(currentWeapon == null) return false;
+            return currentWeapon.Reload();
+        }
+
+        
     }    
 }

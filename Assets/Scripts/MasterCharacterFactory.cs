@@ -6,7 +6,7 @@ namespace Game.Core
 {
     public class MasterCharacterFactory : BaseCharacterFactory
     {
-        [Header("All possible characters in a list")]
+        [Header("Add character data scriptable objects to this list")]
         [SerializeField] private List<CharacterData> allCharacterData;
         private Dictionary<CharacterData, GameObject> prefabLookup;
 
@@ -37,18 +37,40 @@ namespace Game.Core
 
 
         /*
-            CAN CREATE CHARACTER BY PASSED SPECIFIC SCRIPTABLE OBJECT
+            CHARACTER WILL BE SPAWNED FROM FACTORY ---> PLACED IN THEIR CORRESPONDING POSITION
         */
-        public ICharacter CreateCharacterFromData(CharacterData data)
+        // public ICharacter CreateCharacterFromData(CharacterData data)
+        // {
+        //     if(prefabLookup.TryGetValue(data, out GameObject prefab))
+        //     {
+        //         GameObject characterObj = Instantiate(prefab);
+        //         UniversalCharacter characterUnit = characterObj.GetComponent<UniversalCharacter>();
+        //         characterObj.transform.position = data.spawnPoint;
+                
+                
+        //         if(characterUnit != null)
+        //         {
+        //             characterUnit.Initialize(data); // PASS CHARCTER DATA TO CHARACTER
+        //             return characterUnit; 
+        //         }
+        //     }
+        //     return null;
+        // }
+
+
+
+        public override ICharacter CreateCharacter(CharacterData data) 
         {
             if(prefabLookup.TryGetValue(data, out GameObject prefab))
             {
                 GameObject characterObj = Instantiate(prefab);
                 UniversalCharacter characterUnit = characterObj.GetComponent<UniversalCharacter>();
+                characterObj.transform.position = data.spawnPoint;
+                
                 
                 if(characterUnit != null)
                 {
-                    characterUnit.characterData = data;
+                    characterUnit.Initialize(data); // PASS CHARCTER DATA TO CHARACTER
                     return characterUnit; 
                 }
             }
@@ -56,14 +78,12 @@ namespace Game.Core
         }
 
 
-
-        public override ICharacter CreateCharacter() 
+        public void SpawnAllEnimies()
         {
-            if (allCharacterData.Count > 0)
+            foreach(var characterData in prefabLookup)
             {
-                return CreateCharacterFromData(allCharacterData[0]);
+                CreateCharacter(characterData.Key);
             }
-            return null;
         }
     }    
 }

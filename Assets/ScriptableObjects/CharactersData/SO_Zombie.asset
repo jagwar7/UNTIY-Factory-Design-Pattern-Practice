@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5345167e3019ffd4ab15a0e45a50a3b7, type: 3}
+  m_Name: SO_Zombie
+  m_EditorClassIdentifier: 
+  characterName: Zombie X
+  characterPrefab: {fileID: 4843215109936457434, guid: c51cae965d134dc489f0760150175d8d, type: 3}
+  health: 200
+  speed: 10
+  spawnPoint: {x: 140, y: 15, z: -218}
+  defaultWeapon: {fileID: 11400000, guid: a6a835efc680c0e4bab3db04fe2a5bd1, type: 2}
