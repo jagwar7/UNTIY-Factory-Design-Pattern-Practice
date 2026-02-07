@@ -48,7 +48,7 @@ pipeline {
             }
         }
 
-        stage('3. Run Unity NUnit Tests') {
+        stage('3. Run Unity NUnit Tests v2') {
             steps {
                 echo "Running NUnit Tests for: ${env.BRANCH}"
 
