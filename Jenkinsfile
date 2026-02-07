@@ -55,16 +55,16 @@ pipeline {
                 bat 'if not exist "artifacts" mkdir "artifacts"'
                 
                 bat """
-                ${UNITY_PATH} ^
+                "${env.UNITY_PATH}" ^
                 -batchmode -nographics ^
                 -projectPath "%WORKSPACE%" ^
                 -runTests -testPlatform EditMode ^
-                -testResults "%WORKSPACE%\artifacts\results.xml" ^
+                -testResults "%WORKSPACE%\\artifacts\\results.xml" ^
                 -forgetHubSelfUpdate ^
                 -burst-disable-compilation ^
                 -no-cache ^
                 -noproxycache ^
-                -logfile "%WORKSPACE%\artifacts\unity_test_log.txt"
+                -logfile "%WORKSPACE%\\artifacts\\unity_test_log.txt"
                 """
             }
         }
