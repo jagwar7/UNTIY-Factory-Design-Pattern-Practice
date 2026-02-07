@@ -2,10 +2,9 @@ pipeline {
     agent any
     
     options {
-        // Essential for 8GB RAM stability
         disableConcurrentBuilds()
         buildDiscarder(logRotator(numToKeepStr: '5'))
-        skipDefaultCheckout() // We do checkout manually in Stage 0
+        skipDefaultCheckout() 
     }
 
     triggers {
@@ -49,13 +48,13 @@ pipeline {
         }
 
         stage('3. Run Unity NUnit Tests v2') {
+            options { timeout(time: 10, unit: 'MINUTES') } 
             steps {
                 echo "Running NUnit Tests for: ${env.BRANCH}"
-
                 bat 'if not exist "artifacts" mkdir "artifacts"'
                 
                 bat """
-                "${env.UNITY_PATH}" ^
+                call "${env.UNITY_PATH}" ^
                 -batchmode -nographics ^
                 -projectPath "%WORKSPACE%" ^
                 -runTests -testPlatform EditMode ^
@@ -72,7 +71,8 @@ pipeline {
 
     post {
         always {
-            junit 'artifacts/results.xml'
+            junit testResults: 'artifacts/results.xml', allowEmptyResults: true
+            archiveArtifacts artifacts: 'artifacts/*.txt', allowEmptyArchive: true
         }
         success {
             echo "SUCCESS: The Hierarchy is secure."
