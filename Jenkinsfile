@@ -3,16 +3,23 @@ pipeline {
 
     environment {
         BRANCH = "${env.BRANCH_NAME}"
-        PROJECT_CONFIG=readProperties file: '.env'
-        BUILD_USER="${PROJECT_CONFIG['GITHUB_USER']}"
-        DEPARTMENT="${PROJECT_CONFIG['DEPARTMENT']}"
 
     }
 
     stages {
+        stage('0. Initialize Environment') {
+            steps {
+                script {
+                    def props = readProperties file: '.env'
+                    
+                    env.BUILD_USER = props['GITHUB_USER']
+                    env.DEPARTMENT = props['DEPARTMENT']
+                }
+            }
+        }
         stage('1. Identify Department') {
             steps {
-                echo "Starting automated build for: ${env.BRANCH} by: ${BUILD_USER}  from : ${DEPARTMENT} department"
+                echo "Starting automated build for: ${env.BRANCH} by: ${env.BUILD_USER}  from : ${env.DEPARTMENT} department"
             }
         }
 
