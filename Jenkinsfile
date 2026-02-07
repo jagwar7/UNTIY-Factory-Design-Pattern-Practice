@@ -60,7 +60,8 @@ pipeline {
                 -projectPath "${WORKSPACE}" ^
                 -runTests -testPlatform EditMode ^
                 -testResults "${WORKSPACE}\\artifacts\\results.xml" ^
-                -forgetHubSelfUpdate
+                -forgetHubSelfUpdate ^
+                -burst-disable-compilation
                 """
             }
         }
