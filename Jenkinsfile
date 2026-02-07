@@ -16,8 +16,8 @@ pipeline {
                     
                     if(fileExists(configFile)){
                         def props = readProperties file: configFile
-                        env.BUILD_USER = props['GITHUB_USER'] ? : "UNDEFINED USER"
-                        env.DEPARTMENT = props['DEPARTMENT'] ? : "UNDEFINED DEPARTMENT"
+                        env.BUILD_USER = props['GITHUB_USER'] ?: "UNDEFINED USER"
+                        env.DEPARTMENT = props['DEPARTMENT'] ?: "UNDEFINED DEPARTMENT"
                     }   
                 }
             }
