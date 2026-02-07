@@ -9,7 +9,7 @@ pipeline {
     }
 
     stages {
-        stage('0. Initialize Environmental Setup 1') {
+        stage('0. Initialize Environmental Setup') {
             steps {
                 checkout scm
 
