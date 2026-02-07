@@ -9,11 +9,16 @@ pipeline {
     stages {
         stage('0. Initialize Environment') {
             steps {
+                checkout scm
+
                 script {
-                    def props = readProperties file: '.env'
+                    def configFile = 'user.gitconfig.txt'
                     
-                    env.BUILD_USER = props['GITHUB_USER']
-                    env.DEPARTMENT = props['DEPARTMENT']
+                    if(fileExists(configFile)){
+                        def props = readProperties file: configFile
+                        env.BUILD_USER = props['GITHUB_USER'] ? : "UNDEFINED USER"
+                        env.DEPARTMENT = props['DEPARTMENT'] ? : "UNDEFINED DEPARTMENT"
+                    }   
                 }
             }
         }
@@ -37,10 +42,7 @@ pipeline {
         stage('3. Run Unity NUnit Tests') {
             steps {
                 echo "Running NUnit Tests for Department: ${env.BRANCH}"
-                /* SOLID INTERMEDIATE NOTE: 
-                   This is a placeholder. Once we link your Unity Editor to Docker, 
-                   we will replace this echo with the actual CLI command.
-                */
+                
             }
         }
     }
