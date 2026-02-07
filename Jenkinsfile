@@ -71,14 +71,20 @@ pipeline {
 
     post {
         always {
-            junit testResults: 'artifacts/results.xml', allowEmptyResults: true
-            archiveArtifacts artifacts: 'artifacts/*.txt', allowEmptyArchive: true
+            script {
+                echo "Waiting for slow disk write (RAM Bottleneck workaround)..."
+                sleep time: 10, unit: 'SECONDS'
+            }
+            
+            junit testResults: '**/artifacts/results.xml', allowEmptyResults: true
+            
+            archiveArtifacts artifacts: 'artifacts/*.txt, artifacts/*.xml', allowEmptyArchive: true
         }
         success {
             echo "SUCCESS: The Hierarchy is secure."
         }
         failure {
-            echo "FAILURE: Notify the department lead immediately."
+            echo "FAILURE: Check the archived unity_test_log.txt for C# errors."
         }
     }
 }
