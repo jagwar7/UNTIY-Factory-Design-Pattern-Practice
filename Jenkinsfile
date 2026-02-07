@@ -1,21 +1,28 @@
 pipeline {
     agent any
+    
+    options {
+        // Essential for 8GB RAM stability
+        disableConcurrentBuilds()
+        buildDiscarder(logRotator(numToKeepStr: '5'))
+        skipDefaultCheckout() // We do checkout manually in Stage 0
+    }
+
     triggers {
         githubPush()
     }
+
     environment {
         BRANCH = "${env.BRANCH_NAME}"
-
+        UNITY_PATH = "C:\\Program Files\\Unity\\Hub\\Editor\\2022.3.62f3\\Editor\\Unity.exe"
     }
 
     stages {
         stage('0. Initialize Environmental Setup') {
             steps {
                 checkout scm
-
                 script {
                     def configFile = 'user.gitconfig.txt'
-                    
                     if(fileExists(configFile)){
                         def props = readProperties file: configFile
                         env.BUILD_USER = props['GITHUB_USER'] ?: "UNDEFINED USER"
@@ -24,18 +31,18 @@ pipeline {
                 }
             }
         }
+
         stage('1. Identify Department') {
             steps {
-                echo "Starting automated build for: ${env.BRANCH} by: ${env.BUILD_USER}  from : ${env.DEPARTMENT} department"
+                echo "Starting automated build for: ${env.BRANCH} by: ${env.BUILD_USER}"
             }
         }
 
         stage('2. Unity Project Validation') {
             steps {
-                echo "Verifying Unity Project Integrity..."
                 script {
                     if (!fileExists('Assets') || !fileExists('ProjectSettings')) {
-                        error "This does not look like a Unity project! Check your root folder."
+                        error "This does not look like a Unity project!"
                     }
                 }
             }
@@ -43,18 +50,31 @@ pipeline {
 
         stage('3. Run Unity NUnit Tests') {
             steps {
-                echo "Running NUnit Tests for Department: ${env.BRANCH}"
+                echo "Running NUnit Tests for: ${env.BRANCH}"
+
+                bat 'if not exist "artifacts" mkdir "artifacts"'
                 
+                bat """
+                "${env.UNITY_PATH}" ^
+                -batchmode -nographics ^
+                -projectPath "${WORKSPACE}" ^
+                -runTests -testPlatform EditMode ^
+                -testResults "${WORKSPACE}\\artifacts\\results.xml" ^
+                -forgetHubSelfUpdate
+                """
             }
         }
     }
 
     post {
+        always {
+            junit 'artifacts/results.xml'
+        }
         success {
-            echo "SUCCESS: ${env.BRANCH} by: ${env.BUILD_USER}  from : ${env.DEPARTMENT} department passed all checks. The Hierarchy is secure."
+            echo "SUCCESS: The Hierarchy is secure."
         }
         failure {
-            echo "FAILURE: ${env.BRANCH} by: ${env.BUILD_USER}  from : ${env.DEPARTMENT} department build failed. Notify the department lead immediately."
+            echo "FAILURE: Notify the department lead immediately."
         }
     }
 }
