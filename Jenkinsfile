@@ -49,10 +49,10 @@ pipeline {
 
     post {
         success {
-            echo "SUCCESS: ${env.BRANCH} passed all checks. The Hierarchy is secure."
+            echo "SUCCESS: ${env.BRANCH} by: ${env.BUILD_USER}  from : ${env.DEPARTMENT} department passed all checks. The Hierarchy is secure."
         }
         failure {
-            echo "FAILURE: ${env.BRANCH} build failed. Notify the department lead immediately."
+            echo "FAILURE: ${env.BRANCH} by: ${env.BUILD_USER}  from : ${env.DEPARTMENT} department build failed. Notify the department lead immediately."
         }
     }
 }
