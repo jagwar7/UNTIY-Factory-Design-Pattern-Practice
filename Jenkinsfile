@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('1. Identify Department') {
             steps {
-                echo "Starting automated build for: ${env.BRANCH}"
+                echo "Starting automated build for: ${env.BRANCH} by: ${BUILD_USER}  from : ${DEPARTMENT} department"
             }
         }
 
