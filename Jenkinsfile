@@ -55,13 +55,16 @@ pipeline {
                 bat 'if not exist "artifacts" mkdir "artifacts"'
                 
                 bat """
-                "${env.UNITY_PATH}" ^
+                "C:\Program Files\Unity\Hub\Editor\2022.3.62f3\Editor\Unity.exe" ^
                 -batchmode -nographics ^
-                -projectPath "${WORKSPACE}" ^
+                -projectPath "%WORKSPACE%" ^
                 -runTests -testPlatform EditMode ^
-                -testResults "${WORKSPACE}\\artifacts\\results.xml" ^
+                -testResults "%WORKSPACE%\artifacts\results.xml" ^
                 -forgetHubSelfUpdate ^
-                -burst-disable-compilation
+                -burst-disable-compilation ^
+                -no-cache ^
+                -noproxycache ^
+                -logfile "%WORKSPACE%\artifacts\unity_test_log.txt"
                 """
             }
         }
