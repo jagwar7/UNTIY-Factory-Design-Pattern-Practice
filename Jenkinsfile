@@ -2,8 +2,11 @@ pipeline {
     agent any
 
     environment {
-        // Automatically identifies the branch (Department) being built
         BRANCH = "${env.BRANCH_NAME}"
+        PROJECT_CONFIG=readProperties file: '.env'
+        BUILD_USER="${PROJECT_CONFIG['GITHUB_USER']}"
+        DEPARTMENT="${PROJECT_CONFIG['DEPARTMENT']}"
+
     }
 
     stages {
