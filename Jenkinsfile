@@ -55,7 +55,7 @@ pipeline {
                 bat 'if not exist "artifacts" mkdir "artifacts"'
                 
                 bat """
-                "C:\Program Files\Unity\Hub\Editor\2022.3.62f3\Editor\Unity.exe" ^
+                ${UNITY_PATH} ^
                 -batchmode -nographics ^
                 -projectPath "%WORKSPACE%" ^
                 -runTests -testPlatform EditMode ^
