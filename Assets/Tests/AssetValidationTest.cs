@@ -11,6 +11,7 @@ public class AssetValidationTest
         // THIS IS A STATIC ANALYSIS
         string[] guids = AssetDatabase.FindAssets("t:CharacterData");
 
+        // IF THERE IS NO CHARACTER DATA ---> NO NEED TO PROCEED
         Assert.Greater(guids.Length, 0, "No CharacterData found. Did you created the CharacterData scriptable obejct yet ?");
 
         foreach(string guid in guids)
