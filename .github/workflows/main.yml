@@ -3,10 +3,14 @@ name: Unity Build Pipeline 🚀
 on:
   push:
     branches:
-      - '**'
+      - '**' 
   pull_request:
     branches:
       - '**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
@@ -31,6 +35,8 @@ jobs:
         uses: game-ci/unity-test-runner@v4
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}      
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }} 
         with:
           testMode: PlayMode
           githubToken: ${{ secrets.GITHUB_TOKEN }}
@@ -58,6 +64,8 @@ jobs:
         uses: game-ci/unity-builder@v4
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}      
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }} 
         with:
           targetPlatform: StandaloneWindows64
 
@@ -65,4 +73,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Windows-Build
-          path: build/StandaloneWindows64 
+          path: build/StandaloneWindows64
