@@ -23,6 +23,10 @@ public class AssetValidationTest
             // CHECK IF CHARACTER PREFAB GAME OBJECT IS PRESENT IN SCRIPTABLE OBJECT
             Assert.IsNotNull(characterData.characterPrefab, $"Error: CharacterData at {path} is a missing prefab. Please check the prefab GameObject field");
             
+            
+            // CHECK IF CHARACTER PREFAB GAME OBJECT IS PRESENT IN SCRIPTABLE OBJECT
+            Assert.IsNotNull(characterData.defaultWeapon, $"Error: Default Weapon  at {path} is a missing scriptable object. Please check the field");
+            
             // CHECK IF CHARACTER PREFAB GAME OBJECT IS PRESENT IN SCRIPTABLE OBJECT
             Assert.IsFalse(string.IsNullOrEmpty(characterData.characterName), $"Error: CharacterData at {path} has no name. Please check the name field, It will lead to UI Crash");
 

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Jagwar
   characterPrefab: {fileID: 2272542708134153021, guid: 5b10505a15fc80c4fbc9c26c90c8f820, type: 3}
-  health: 200
+  health: 95
   speed: 10
   spawnPoint: {x: -168, y: 15, z: 178}
   defaultWeapon: {fileID: 11400000, guid: a6a835efc680c0e4bab3db04fe2a5bd1, type: 2}
