@@ -1,6 +1,5 @@
 using UnityEngine;
-using System;
-using System.Collections.Generic;
+using Cinemachine;
 
 
 namespace Game.Core
@@ -8,27 +7,28 @@ namespace Game.Core
     public class LevelManager : MonoBehaviour
     {
         [SerializeField] private MasterCharacterFactory masterCharacterFactory;
-        [SerializeField] private CharacterData characterToSpawn;
+        [SerializeField] private CharacterData playerData;
+        [SerializeField] private  CinemachineVirtualCamera virtualCamera;
 
-        void Update()
+        void Start()
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                SpawnCharacter();
-            }
-        }
+            // SPAWN ALL ENEMIES...
+            masterCharacterFactory.SpawnAllEnimies();
 
-        void SpawnCharacter()
-        {
-            if(masterCharacterFactory != null && characterToSpawn != null)
+            // SPAWN PLAYER AND ENABLE HIS PLAYER MOVEMENT SCRIPT TO CONTROL HIM
+            if(playerData != null && playerData.characterPrefab != null){}
             {
-                ICharacter spawnedCharacter = masterCharacterFactory.CreateCharacterFromData(characterToSpawn);
+                GameObject playerObj = Instantiate(playerData.characterPrefab);
+                playerObj.transform.position = playerData.spawnPoint;
+                playerObj.GetComponent<PlayerMovement>().enabled = true;
 
-                if(spawnedCharacter != null)
+                if(virtualCamera != null)
                 {
-                    spawnedCharacter.PerformAction();
+                    virtualCamera.Follow = playerObj.transform;
+                    virtualCamera.LookAt = playerObj.transform;
                 }
             }
         }
+
     }
 }

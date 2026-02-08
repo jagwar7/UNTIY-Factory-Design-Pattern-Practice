@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c9537f52a957644798008959b538875, type: 3}
+  m_Name: SO_Weapon_N
+  m_EditorClassIdentifier: 
+  weaponName: Weapon N
+  weaponPrefab: {fileID: 390521152440839617, guid: 92013524f9a82e84eb6f347efa4bee91, type: 3}
+  damage: 45
+  maxAmmo: 500
+  AmmoCapacity: 40
+  reloadAmmo: 40
+  fireRate: 25
+  range: 30

@@ -11,6 +11,7 @@ public class AssetValidationTest
         // THIS IS A STATIC ANALYSIS
         string[] guids = AssetDatabase.FindAssets("t:CharacterData");
 
+        // IF THERE IS NO CHARACTER DATA ---> NO NEED TO PROCEED
         Assert.Greater(guids.Length, 0, "No CharacterData found. Did you created the CharacterData scriptable obejct yet ?");
 
         foreach(string guid in guids)
@@ -21,6 +22,10 @@ public class AssetValidationTest
 
             // CHECK IF CHARACTER PREFAB GAME OBJECT IS PRESENT IN SCRIPTABLE OBJECT
             Assert.IsNotNull(characterData.characterPrefab, $"Error: CharacterData at {path} is a missing prefab. Please check the prefab GameObject field");
+            
+            
+            // CHECK IF CHARACTER PREFAB GAME OBJECT IS PRESENT IN SCRIPTABLE OBJECT
+            Assert.IsNotNull(characterData.defaultWeapon, $"Error: Default Weapon  at {path} is a missing scriptable object. Please check the field");
             
             // CHECK IF CHARACTER PREFAB GAME OBJECT IS PRESENT IN SCRIPTABLE OBJECT
             Assert.IsFalse(string.IsNullOrEmpty(characterData.characterName), $"Error: CharacterData at {path} has no name. Please check the name field, It will lead to UI Crash");
