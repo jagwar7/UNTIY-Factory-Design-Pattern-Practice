@@ -1,7 +1,7 @@
 name: 1-GET-LICENSE
 
 on: 
-  workflow_dispatch: # This is the magic button you need
+  workflow_dispatch: 
 
 jobs:
   activation:
