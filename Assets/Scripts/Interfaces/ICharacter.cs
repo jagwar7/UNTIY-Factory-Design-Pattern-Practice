@@ -1,11 +1,10 @@
-using UnityEngine;
 
 
 namespace Game.Core
 {
     public interface ICharacter
     {
-        void PerformAction();
+       void Initialize(CharacterData characterData);
     }    
 }
 
