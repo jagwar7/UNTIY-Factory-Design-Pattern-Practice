@@ -6,31 +6,82 @@ on:
       - '**'
 
 jobs:
+  # SETUP INTEGRATION TEST PROCESS
+  test:
+    name: Run Intergration Test
+    runs-on: ubuntu-latest
+    steps:
+      # ----------------------------------------------------
+      - uses: actions/checkout@v4   # DOWNLOAD LATEST CHANGES TO UBUNTU 
+        with:
+          lfs: true
+
+
+      # ----------------------------------------------------
+      - uses: actions/cache@v3  # STORE LIBRARY FOLDER FOR FUTURE REQUIREMENTS
+        with:
+          path: Library
+          key: Library-StandaloneWindows64-${{ hashFiles('ProjectSettings/ProjectVersion.txt') }} # USE WINDOWS 64 FOR RUNNING TEST
+          restore-keys: |
+            Library-Standalone64-  
+
+
+      # ----------------------------------------------------
+      - name: Run Unity Tests   # RUN INTERGRATIONS TEST
+        uses: game-ci/unity-test-runner@v4
+        id: tests
+        env:
+          UNITY_LICENSE: ${{secrets.UNITY_LICENSE}}
+          UNITY_EMAIL: ${{secrets.UNITY_EMAIL}}
+          UNITY_PASSWORD: ${{secrets.UNITY_PASSWORD}}
+        with:
+          githubToken: ${{secrets.GITHUB_TOKEN}}
+          checkName: "INTEGRATION TEST RESULTS"
+
+
+
+      # ----------------------------------------------------
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Test-Results
+          path: artifacts
+
+
+  # SETUP BUILD PROCESS
   build:
+    needs: test # TO EXECUTE THIS STEPS, test NEEDS TO BE COMPLETED
     name: Build for ${{ matrix.targetPlatform }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false 
       matrix:
-        targetPlatform:
-          - StandaloneWindows64 # Windows 64-bit
-          - Android             # Android APK
-          - WebGL               # Web Browser build
+        targetPlatform: [StandaloneWindows64, Android]
+      # ----------------------------------------------------
+
+
     steps:
+      # ----------------------------------------------------
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           lfs: true
 
-      - name: Cache Library
+
+      # ----------------------------------------------------
+      - name: Cache Library 
         uses: actions/cache@v3
         with:
           path: Library
           key: Library-${{ matrix.targetPlatform }}-${{ hashFiles('ProjectSettings/ProjectVersion.txt') }}
           restore-keys: |
             Library-${{ matrix.targetPlatform }}-
+            Library-StandaloneWindows64-
 
-      - name: Build Project
+
+      # ----------------------------------------------------
+      - name: Build Project  # START BUILD
         uses: game-ci/unity-builder@v4
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
@@ -39,7 +90,11 @@ jobs:
         with:
           targetPlatform: ${{ matrix.targetPlatform }} 
 
-      - name: Upload Build
+
+
+
+      # ----------------------------------------------------
+      - name: Upload Build  #UPLOAD BUILD TO ARTIFACT
         uses: actions/upload-artifact@v4
         with:
           name: GameBuild-${{ matrix.targetPlatform }} 
